@@ -3,27 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "user";
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col px-6 py-8">
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1599351431202-6e0c06e76f8f?q=80&w=2000&auto=format&fit=crop"
-          alt="Background"
-          fill
-          className="object-cover brightness-[0.3]"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
-
+    <>
       {/* Header */}
       <div className="relative z-10 flex justify-between items-center mb-6">
         <Link href="/get-started" className="p-2 -ml-2 rounded-full hover:bg-white/10 transition-colors">
@@ -121,6 +110,28 @@ export default function RegisterPage() {
           </p>
         </motion.div>
       </div>
+    </>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <div className="relative min-h-screen w-full flex flex-col px-6 py-8">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="https://images.unsplash.com/photo-1599351431202-6e0c06e76f8f?q=80&w=2000&auto=format&fit=crop"
+          alt="Background"
+          fill
+          className="object-cover brightness-[0.3]"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40" />
+      </div>
+
+      <Suspense fallback={<div className="relative z-10 text-white text-center mt-20">Loading...</div>}>
+        <RegisterContent />
+      </Suspense>
     </div>
   );
 }
